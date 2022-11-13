@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import { darkTheme } from "../themes";
+import { darkTheme, lightTheme } from "../themes";
 import { UIProvider } from "../context/ui";
 import { EntriesProvider } from "../context/entries";
 import { SnackbarProvider } from "notistack";

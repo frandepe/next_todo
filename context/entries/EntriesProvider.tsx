@@ -60,6 +60,25 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     }
   };
 
+  const deleteEntry = async (entry: Entry, showSnackbar = false) => {
+    try {
+      const { data } = await entriesApi.delete<Entry>(`/entries/${entry._id}`);
+      dispatch({ type: "[Entry] Entry-Deleted", payload: data });
+      if (showSnackbar) {
+        enqueueSnackbar("Entrada borrada correctamente", {
+          variant: "success",
+          autoHideDuration: 1500,
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right",
+          },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const refreshEntries = async () => {
     const { data } = await entriesApi.get<Entry[]>("/entries");
     dispatch({ type: "[Entry] Refresh-Data", payload: data });
@@ -75,6 +94,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         ...state,
         addNewEntry,
         updateEntry,
+        deleteEntry,
       }}
     >
       {children}

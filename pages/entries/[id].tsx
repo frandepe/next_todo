@@ -21,10 +21,10 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { Layout } from "../../components/layouts";
 import { Entry, EntryStatus } from "../../interfaces";
 import { useState, ChangeEvent, useMemo, FC, useContext } from "react";
-import { isValidObjectId } from "mongoose";
 import { dbEntries } from "../../database";
 import { EntriesContext } from "../../context/entries";
 import { dateFunctions } from "../../utils";
+import { useRouter } from "next/router";
 
 const validStatus: EntryStatus[] = ["pending", "in-progress", "finished"];
 
@@ -33,7 +33,8 @@ interface Props {
 }
 
 export const EntryPage: FC<Props> = ({ entry }) => {
-  const { updateEntry } = useContext(EntriesContext);
+  const router = useRouter();
+  const { updateEntry, deleteEntry } = useContext(EntriesContext);
 
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
@@ -63,6 +64,12 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     };
 
     updateEntry(updatedEntry, true);
+    router.push("/");
+  };
+
+  const onDelete = () => {
+    deleteEntry(entry, true);
+    router.push("/");
   };
 
   return (
@@ -119,6 +126,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
         </Grid>
       </Grid>
       <IconButton
+        onClick={onDelete}
         sx={{
           position: "fixed",
           bottom: 30,

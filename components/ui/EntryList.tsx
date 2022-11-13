@@ -42,8 +42,10 @@ export const EntryList: FC<Props> = ({ status }) => {
         sx={{
           height: "calc(100vh - 180px)",
           overflow: "scroll",
+          overflowX: "hidden",
+          overflowY: "hidden",
           backgroundColor: "transparent",
-          padding: "1px 5px",
+          padding: "3px 5px",
         }}
       >
         <List sx={{ opacity: isDragging ? 0.2 : 1, transition: "all .3s" }}>
